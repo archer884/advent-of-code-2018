@@ -1,0 +1,4 @@
+Claim = { "#" ~ Id ~ " @ " ~ Origin ~ ": " ~ Size }
+Id = { ASCII_DIGIT+ }
+Origin = { ASCII_DIGIT+ ~ "," ~ ASCII_DIGIT+ }
+Size = { ASCII_DIGIT+ ~ "x" ~ ASCII_DIGIT+ }
