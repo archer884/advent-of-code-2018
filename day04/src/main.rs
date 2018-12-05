@@ -19,22 +19,14 @@ use std::error::Error;
 // Mitigation: Guards never fall asleep before midnight.
 
 fn main() -> Result<(), Box<Error>> {
-    let (_, guard) = build_guards(read_events())
-        .map(|x| (total_time_asleep(&x), x))
-        .max_by_key(|x| x.0)
+    let (sleep, guard) = build_guards(read_events())
+        .filter_map(|guard| most_slept_minute(&guard).map(|sleep| (sleep, guard)))
+        .max_by_key(|x| (x.0).1)
         .ok_or("Apparently, no one works.")?;
 
-    let mut sleep_state = HashMap::new();
-    for minute in guard.iter().flat_map(|x| x.sleep_report()) {
-        *sleep_state.entry(minute).or_insert(0) += 1;
-    }
-
     let guard_id = guard.first().ok_or("Seriously, man...")?.id;
-    let (target_minute, _) = sleep_state
-        .into_iter()
-        .max_by_key(|x| x.1)
-        .ok_or("Or maybe no one sleeps?")?;
-
+    let target_minute = sleep.0;
+    
     println!(
         "Guard ID ({}) * Target Minute ({}) = {}",
         guard_id,
@@ -44,8 +36,13 @@ fn main() -> Result<(), Box<Error>> {
     Ok(())
 }
 
-fn total_time_asleep(guards: &[Guard]) -> i32 {
-    guards.iter().map(|x| x.time_asleep()).sum()
+fn most_slept_minute(guard: &[Guard]) -> Option<(u8, i32)> {
+    let mut sleep_state = HashMap::new();
+    for minute in guard.iter().flat_map(|x| x.sleep_report()) {
+        *sleep_state.entry(minute).or_insert(0) += 1;
+    }
+
+    sleep_state.into_iter().max_by_key(|x| x.1)
 }
 
 fn build_guards(events: impl IntoIterator<Item = Event>) -> impl Iterator<Item = Vec<Guard>> {
