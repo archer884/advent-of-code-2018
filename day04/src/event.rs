@@ -8,7 +8,7 @@ pub struct Event {
     kind: EventKind,
 }
 
-#[derive(Debug)]
+#[derive(Copy, Clone, Debug)]
 pub enum EventKind {
     Shift(u16),
     Wake,
@@ -18,6 +18,10 @@ pub enum EventKind {
 impl Event {
     pub fn timestamp(&self) -> Timestamp {
         self.timestamp
+    }
+
+    pub fn kind(&self) -> EventKind {
+        self.kind
     }
 }
 

@@ -6,3 +6,4 @@ edition = "2018"
 
 [dependencies]
 grabinput = "0.2"
+hashbrown = "0.1"
