@@ -9,17 +9,18 @@ pub struct Point {
 }
 
 impl Point {
+    #[cfg(test)]
     fn new(x: i32, y: i32) -> Point {
         Point { x, y }
     }
 
-    fn is_finite(&self, others: &[Point]) -> bool {
+    fn is_finite(self, others: &[Point]) -> bool {
         let mut x_limit_max = false;
         let mut x_limit_min = false;
         let mut y_limit_max = false;
         let mut y_limit_min = false;
 
-        for &Point { x, y } in others.iter().filter(|&x| x != self) {
+        for &Point { x, y } in others.iter().filter(|&&x| x != self) {
             if !x_limit_max {
                 x_limit_max = self.x < x;
             }
@@ -40,7 +41,7 @@ impl Point {
         x_limit_max && x_limit_min && y_limit_max && y_limit_min
     }
 
-    fn distance(&self, Point { x, y }: Point) -> i32 {
+    fn distance(self, Point { x, y }: Point) -> i32 {
         (self.x - x).abs() + (self.y - y).abs()
     }
 }
@@ -105,7 +106,7 @@ pub fn finite_areas(points: &[Point]) -> Vec<(Point, i32)> {
         })
     }
 
-    fn single<T>(mut items: Vec<T>) -> Option<T> {
+    fn single<T>(items: Vec<T>) -> Option<T> {
         if items.len() == 1 {
             items.into_iter().next()
         } else {
