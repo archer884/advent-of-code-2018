@@ -1,0 +1,37 @@
+[[package]]
+name = "byteorder"
+version = "1.2.7"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+
+[[package]]
+name = "day06"
+version = "0.1.0"
+dependencies = [
+ "grabinput 0.2.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "hashbrown 0.1.7 (registry+https://github.com/rust-lang/crates.io-index)",
+]
+
+[[package]]
+name = "grabinput"
+version = "0.2.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+
+[[package]]
+name = "hashbrown"
+version = "0.1.7"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+dependencies = [
+ "byteorder 1.2.7 (registry+https://github.com/rust-lang/crates.io-index)",
+ "scopeguard 0.3.3 (registry+https://github.com/rust-lang/crates.io-index)",
+]
+
+[[package]]
+name = "scopeguard"
+version = "0.3.3"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+
+[metadata]
+"checksum byteorder 1.2.7 (registry+https://github.com/rust-lang/crates.io-index)" = "94f88df23a25417badc922ab0f5716cc1330e87f71ddd9203b3a3ccd9cedf75d"
+"checksum grabinput 0.2.1 (registry+https://github.com/rust-lang/crates.io-index)" = "22799229c87c97ee7738fe819aa5a3e858a12a1498a56e5d46965e2bb286b522"
+"checksum hashbrown 0.1.7 (registry+https://github.com/rust-lang/crates.io-index)" = "64b7d419d0622ae02fe5da6b9a5e1964b610a65bb37923b976aeebb6dbb8f86e"
+"checksum scopeguard 0.3.3 (registry+https://github.com/rust-lang/crates.io-index)" = "94258f53601af11e6a49f722422f6e3425c52b06245a5cf9bc09908b174f5e27"

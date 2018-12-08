@@ -1,0 +1,9 @@
+[package]
+name = "day06"
+version = "0.1.0"
+authors = ["J/A <archer884@gmail.com>"]
+edition = "2018"
+
+[dependencies]
+grabinput = "0.2"
+hashbrown = "0.1"
