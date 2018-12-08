@@ -153,15 +153,6 @@ pub fn finite_areas(points: &[Point]) -> Vec<(Point, i32)> {
 mod tests {
     use super::Point;
 
-    static POINTS: &[Point] = &[
-        Point { x: 1, y: 1 },
-        Point { x: 1, y: 6 },
-        Point { x: 8, y: 3 },
-        Point { x: 3, y: 4 },
-        Point { x: 5, y: 5 },
-        Point { x: 8, y: 9 },
-    ];
-
     #[test]
     fn distance() {
         let a = Point::new(0, 0);
