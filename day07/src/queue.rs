@@ -1,4 +1,4 @@
-use crate::Step;
+use crate::step::Step;
 
 struct Item {
     step: Step,
@@ -33,7 +33,9 @@ impl WorkQueue {
     }
 
     pub(crate) fn increment<'a>(&'a mut self) -> impl Iterator<Item = Step> + 'a {
-        self.items.iter_mut().for_each(|item| item.turns_remaining -= 1);
+        self.items
+            .iter_mut()
+            .for_each(|item| item.turns_remaining -= 1);
         self.items
             .drain_filter(|item| item.turns_remaining == 0)
             .map(|item| item.step)

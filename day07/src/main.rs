@@ -1,38 +1,15 @@
 #![feature(drain_filter)] // Cool!
 
 mod queue;
+mod step;
 
-use crate::queue::WorkQueue;
+use crate::{queue::WorkQueue, step::Step};
 use hashbrown::{HashMap, HashSet};
-use std::fmt::{self, Debug, Display};
-
-#[derive(Copy, Clone, Eq, PartialEq, Ord, PartialOrd, Hash)]
-struct Step(u8);
-
-impl Step {
-    fn turns(&self) -> i32 {
-        (self.0 - b'A') as i32 + 61
-    }
-}
-
-impl Debug for Step {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let mut debug = f.debug_tuple("Step");
-        debug.field(&(self.0 as char));
-        debug.finish()
-    }
-}
-
-impl Display for Step {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "{}", self.0 as char)
-    }
-}
 
 fn main() {
     let mut steps = dependencies_by_step(grabinput::from_stdin());
     let mut completed_steps = HashSet::new();
-    
+
     let mut seconds = 0;
     let mut queue = WorkQueue::new();
 
