@@ -16,6 +16,7 @@ impl Item {
 
 #[derive(Default)]
 pub struct WorkQueue {
+    count: usize,
     items: Vec<Item>,
 }
 
@@ -32,7 +33,12 @@ impl WorkQueue {
         self.items.is_empty()
     }
 
+    pub(crate) fn seconds(&self) -> usize {
+        self.count
+    }
+
     pub(crate) fn increment<'a>(&'a mut self) -> impl Iterator<Item = Step> + 'a {
+        self.count += 1;
         self.items
             .iter_mut()
             .for_each(|item| item.turns_remaining -= 1);

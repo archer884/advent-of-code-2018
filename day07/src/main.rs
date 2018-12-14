@@ -10,9 +10,7 @@ fn main() {
     let mut steps = dependencies_by_step(grabinput::from_stdin());
     let mut completed_steps = HashSet::new();
 
-    let mut seconds = 0;
     let mut queue = WorkQueue::new();
-
     while !steps.is_empty() || !queue.is_empty() {
         let mut eligible = eligible_steps(&steps, &completed_steps);
         eligible.sort();
@@ -22,13 +20,12 @@ fn main() {
             steps.remove(&item);
         }
 
-        seconds += 1;
         for item in queue.increment() {
             completed_steps.insert(item);
         }
     }
 
-    println!("{}", seconds);
+    println!("{}", queue.seconds());
 }
 
 fn eligible_steps(steps: &HashMap<Step, Vec<Step>>, complete: &HashSet<Step>) -> Vec<Step> {
