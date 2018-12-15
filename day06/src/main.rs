@@ -1,20 +1,21 @@
+mod field;
 mod point;
 
-use crate::point::{ParsePointError, Point};
+use crate::point::Point;
+use std::error::Error;
 
-fn main() -> Result<(), ParsePointError> {
+fn main() -> Result<(), Box<Error>> {
     let points: Result<Vec<_>, _> = grabinput::from_stdin()
         .map(|x| x.trim().parse::<Point>())
         .collect();
 
-    let points = points?;
-    let mut finite_points = point::finite_areas(&points);
+    let witness_points = points?;
+    let candidate_points = field::field_iterator(&witness_points).ok_or("Field is unbounded")?;
 
-    finite_points.sort_by_key(|x| x.1);
+    let area_size = candidate_points
+        .filter(|&x| witness_points.iter().map(|&y| x.distance(y)).sum::<i32>() < 10_000)
+        .count();
 
-    for point in finite_points {
-        println!("{:?}", point);
-    }
-
+    println!("{}", area_size);
     Ok(())
 }
