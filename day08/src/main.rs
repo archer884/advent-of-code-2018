@@ -7,12 +7,7 @@ struct Node<'a> {
 
 impl Node<'_> {
     fn checksum(&self) -> i32 {
-        self.metadata.iter().sum::<i32>()
-            + self
-                .children
-                .iter()
-                .map(|x| x.checksum())
-                .sum::<i32>()
+        self.metadata.iter().sum::<i32>() + self.children.iter().map(|x| x.checksum()).sum::<i32>()
     }
 
     fn value(&self) -> i32 {
@@ -20,7 +15,12 @@ impl Node<'_> {
             self.metadata.iter().sum()
         } else {
             self.metadata.iter().fold(0, |a, b| {
-                let added_value = self.children.get((b - 1) as usize).map(|x| x.value()).unwrap_or(0);
+                let added_value = self
+                    .children
+                    .get((b - 1) as usize)
+                    .map(|x| x.value())
+                    .unwrap_or(0);
+
                 a + added_value
             })
         }
