@@ -7,12 +7,23 @@ struct Node<'a> {
 
 impl Node<'_> {
     fn checksum(&self) -> i32 {
-        self.metadata.iter().cloned().sum::<i32>()
+        self.metadata.iter().sum::<i32>()
             + self
                 .children
                 .iter()
                 .map(|x| x.checksum())
                 .sum::<i32>()
+    }
+
+    fn value(&self) -> i32 {
+        if self.children.is_empty() {
+            self.metadata.iter().sum()
+        } else {
+            self.metadata.iter().fold(0, |a, b| {
+                let added_value = self.children.get((b - 1) as usize).map(|x| x.value()).unwrap_or(0);
+                a + added_value
+            })
+        }
     }
 
     fn len(&self) -> usize {
@@ -45,6 +56,7 @@ fn main() -> Result<(), NodeError> {
     let tree = build_tree(&license)?;
 
     println!("{}", tree.checksum());
+    println!("{}", tree.value());
 
     Ok(())
 }
