@@ -7,3 +7,4 @@ edition = "2018"
 [dependencies]
 hashbrown = "0.1"
 structopt = "0.2"
+typed-arena = "1.4.1"
