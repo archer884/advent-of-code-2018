@@ -3,7 +3,7 @@ use std::collections::VecDeque;
 #[derive(Default)]
 pub struct Circle<T> {
     current: usize,
-    marbles: VecDeque<T>, // This is probably still a performance shitshow.
+    marbles: VecDeque<T>,
 }
 
 impl<T> Circle<T> {
