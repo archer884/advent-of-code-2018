@@ -3,6 +3,7 @@ mod circle;
 use crate::circle::Circle;
 use hashbrown::HashMap;
 use structopt::StructOpt;
+use typed_arena::Arena;
 
 #[derive(Copy, Clone, Debug, StructOpt)]
 struct Opt {
@@ -17,7 +18,8 @@ fn main() {
 }
 
 fn score(players: u32, marbles: u32) -> u32 {
-    let mut circle = Circle::default();
+    let mut arena = Arena::new();
+    let mut circle = Circle::new(&mut arena);
     let mut scores_by_player = HashMap::new();
 
     let moves = (0..=marbles).zip((1..=players).cycle());
